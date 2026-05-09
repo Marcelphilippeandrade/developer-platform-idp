@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Template
+metadata:
+  name: springboot-service
+  title: Spring Boot Service
+  description: Template for standard Spring Boot microservices
+spec:
+  owner: platform-team
+  type: service
+  path: ./template.yaml

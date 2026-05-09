@@ -1,0 +1,37 @@
+# Node
+node_modules/
+dist/
+.cache/
+dist/
+
+# Backstage
+.yarn/
+.pnp.*
+
+# Runner
+# GitHub Runner
+runners/github/actions-runner/
+runners/github/actions-runner/_work/
+runners/github/actions-runner/.runner
+runners/github/actions-runner/.credentials
+runners/github/actions-runner/.credentials_rsaparams
+
+# Env
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Kubernetes
+*.tmp
+
+# Terraform
+.terraform/
+*.tfstate
+
+# Generated projects
+dev/payment-service-registry-*/
