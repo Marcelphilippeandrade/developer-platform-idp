@@ -1,5 +1,11 @@
 # 🚀 Developer Platform (IDP)
 
+![Java](https://img.shields.io/badge/Java-21-orange)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-brightgreen)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-Minikube-blue)
+![GitHub Actions](https://img.shields.io/badge/CI/CD-GitHub_Actions-black)
+![Docker](https://img.shields.io/badge/Docker-Enabled-blue)
+
 Internal Developer Platform (IDP) focused on automating the provisioning, CI/CD pipeline, and Kubernetes deployment of Spring Boot services.
 
 ---
