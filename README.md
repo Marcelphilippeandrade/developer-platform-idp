@@ -75,6 +75,16 @@ I --> J[Internet]
 
 ---
 
+# 🎥 Demo
+
+## CI/CD Pipeline
+
+## Kubernetes Deployment
+
+## Backstage Template
+
+---
+
 # ⚙️ Technologies
 
 * Java 21
