@@ -189,6 +189,29 @@ service running
 
 ---
 
+---
+
+# 🧩 Multi-Service Architecture
+
+The platform now supports multiple services running simultaneously inside the same Kubernetes cluster.
+
+Current services:
+
+- payment-service
+- order-service
+
+Each service contains its own:
+
+- Kubernetes Deployment
+- Kubernetes Service
+- Ingress configuration
+- CI/CD pipeline
+- Rollback strategy
+
+This architecture enables scalability, service isolation, and future expansion into a real microservices platform.
+
+---
+
 # 🎯 Future Improvements
 
 * Multi-service support
