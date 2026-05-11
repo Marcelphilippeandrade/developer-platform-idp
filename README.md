@@ -189,8 +189,6 @@ service running
 
 ---
 
----
-
 # 🧩 Multi-Service Architecture
 
 The platform now supports multiple services running simultaneously inside the same Kubernetes cluster.
