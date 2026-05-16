@@ -27,7 +27,7 @@ The platform automates:
 
 # 🧠 Architecture
 
-```text id="icjlwm"
+```text
 Developer
    ↓
 Git Push
@@ -38,9 +38,14 @@ Docker Build
    ↓
 GitHub Container Registry (GHCR)
    ↓
-Kubernetes (Minikube)
+Kubernetes Cluster (Minikube)
    ↓
-Deployment + Service
+┌───────────────────────┐
+│   payment-service     │
+│   order-service       │
+└───────────────────────┘
+   ↓
+Services + Ingress
    ↓
 Cloudflare Tunnel
    ↓
@@ -64,13 +69,21 @@ D --> E[Build Docker Image]
 
 E --> F[Push to GHCR]
 
-F --> G[Kubernetes Deployment]
+F --> G[Kubernetes Cluster]
 
-G --> H[Service]
+G --> H[payment-service]
 
-H --> I[Cloudflare Tunnel]
+G --> I[order-service]
 
-I --> J[Internet]
+H --> J[Service + Ingress]
+
+I --> K[Service + Ingress]
+
+J --> L[Cloudflare Tunnel]
+
+K --> L
+
+L --> M[Internet]
 ```
 
 ---
@@ -212,13 +225,16 @@ This architecture enables scalability, service isolation, and future expansion i
 
 # 🎯 Future Improvements
 
-* Multi-service support
 * Shared GitHub Runner
 * Kubernetes namespaces
 * AWS EKS deployment
 * Prometheus + Grafana observability
 * Canary deployments
 * Blue/Green strategy
+* Dynamic service templates
+* Shared cluster ingress controller
+* Service discovery
+* API Gateway
 
 ---
 
