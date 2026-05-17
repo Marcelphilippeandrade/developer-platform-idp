@@ -1,0 +1,3 @@
+serviceName: payment-service
+port: 8080
+image: ghcr.io/company/payment-service
