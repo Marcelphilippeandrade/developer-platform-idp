@@ -16,20 +16,20 @@ spec:
         - name: ghcr-secret
       containers:
         - name: {{SERVICE_NAME}}
-          image: ghcr.io/marcelphilippeandrade/payment-service-registry-012:latest
+          image: {{IMAGE_NAME}}
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: {{CONTAINER_PORT}}
           readinessProbe:
             httpGet:
               path: /health
-              port: 8080
+              port: {{CONTAINER_PORT}}
             initialDelaySeconds: 5
             periodSeconds: 5
 
           livenessProbe:
             httpGet:
               path: /health
-              port: 8080
+              port: {{CONTAINER_PORT}}
             initialDelaySeconds: 10
             periodSeconds: 5

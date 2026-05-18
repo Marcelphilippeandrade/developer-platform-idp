@@ -1,3 +1,11 @@
 serviceName: payment-service
-port: 8080
+
+packageGroup: com.company
+
+packageName: com.company.payment
+
+containerPort: 8080
+
+nodePort: 30007
+
 image: ghcr.io/company/payment-service
