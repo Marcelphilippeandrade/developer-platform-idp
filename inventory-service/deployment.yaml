@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{SERVICE_NAME}}
+  template:
+    metadata:
+      labels:
+        app: {{SERVICE_NAME}}
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: {{SERVICE_NAME}}
+          image: {{IMAGE_NAME}}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: {{CONTAINER_PORT}}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: {{CONTAINER_PORT}}
+            initialDelaySeconds: 5
+            periodSeconds: 5
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: {{CONTAINER_PORT}}
+            initialDelaySeconds: 10
+            periodSeconds: 5
