@@ -121,6 +121,12 @@ catalog:
       rules:
         - allow: [User, Group]
 
+    # Spring Boot Template
+    - type: file
+      target: ../../templates/springboot-service/template.yaml
+      rules:
+        - allow: [Template]
+
     ## Uncomment these lines to add more example data
     # - type: url
     #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml

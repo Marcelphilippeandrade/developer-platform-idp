@@ -1,0 +1,58 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+
+metadata:
+  name: springboot-service
+  title: Create Spring Boot Service
+  description: Generate a new Spring Boot microservice
+
+spec:
+  owner: user:guest
+  type: service
+
+  parameters:
+    - title: Service Information
+      required:
+        - serviceName
+        - packageName
+        - containerPort
+        - nodePort
+
+      properties:
+        serviceName:
+          title: Service Name
+          type: string
+          description: Name of the microservice
+
+        packageName:
+          title: Package Name
+          type: string
+          description: Java package
+
+        containerPort:
+          title: Container Port
+          type: number
+          default: 8080
+
+        nodePort:
+          title: Node Port
+          type: number
+          default: 30009
+
+  steps:
+    - id: generate-service
+      name: Generate Service
+      action: debug:log
+      input:
+        message: |
+          Creating service:
+
+          Name: ${{ parameters.serviceName }}
+          Package: ${{ parameters.packageName }}
+          Port: ${{ parameters.containerPort }}
+
+  output:
+    text:
+      - title: Service Created
+        content: |
+          Spring Boot service template executed successfully.
