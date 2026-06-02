@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: payment-service-registry-013
+  description: Spring Boot service
+spec:
+  type: service
+  owner: backend-team
+  lifecycle: experimental
