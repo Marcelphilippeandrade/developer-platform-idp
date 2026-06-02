@@ -32,24 +32,23 @@ spec:
         containerPort:
           title: Container Port
           type: number
-          default: 8080
+          description: Port the application will listen on
 
         nodePort:
           title: Node Port
           type: number
-          default: 30009
+          description: Port to expose the service on the cluster
 
   steps:
-    - id: generate-service
-      name: Generate Service
-      action: debug:log
-      input:
-        message: |
-          Creating service:
 
-          Name: ${{ parameters.serviceName }}
-          Package: ${{ parameters.packageName }}
-          Port: ${{ parameters.containerPort }}
+    - id: generate-service
+      name: Generate Spring Boot Service
+      action: platform:create-service
+      input:
+        serviceName: ${{ parameters.serviceName }}
+        packageName: ${{ parameters.packageName }}
+        containerPort: ${{ parameters.containerPort }}
+        nodePort: ${{ parameters.nodePort }}
 
   output:
     text:
