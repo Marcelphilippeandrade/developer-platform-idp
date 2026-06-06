@@ -27,10 +27,37 @@ export const platformCreateService = () => {
                         description: 'NodePort Kubernetes',
                     }),
             },
+
+            output: {
+                serviceName: z =>
+                    z.string({
+                        description: 'Nome do serviço criado',
+                    }),
+
+                packageName: z =>
+                    z.string({
+                        description: 'Package Java',
+                    }),
+
+                containerPort: z =>
+                    z.number({
+                        description: 'Porta do container',
+                    }),
+
+                nodePort: z =>
+                    z.number({
+                        description: 'NodePort Kubernetes',
+                    }),
+
+                location: z =>
+                    z.string({
+                        description: 'Diretório do projeto',
+                    }),
+            },
         },
 
         async handler(ctx) {
-            const response = await axios.post(
+            const generateServiceResponse = await axios.post(
                 'http://localhost:8000/generate-service',
                 {
                     serviceName: ctx.input.serviceName,
@@ -41,7 +68,32 @@ export const platformCreateService = () => {
             );
 
             ctx.logger.info(
-                `Service generated: ${response.data.service}`,
+                `Service generated: ${generateServiceResponse.data.service}`,
+            );
+
+            ctx.output(
+                'serviceName',
+                generateServiceResponse.data.service,
+            );
+
+            ctx.output(
+                'packageName',
+                ctx.input.packageName,
+            );
+
+            ctx.output(
+                'containerPort',
+                ctx.input.containerPort,
+            );
+
+            ctx.output(
+                'nodePort',
+                ctx.input.nodePort,
+            );
+
+            ctx.output(
+                'location',
+                `/home/marcel/platform/dev/${generateServiceResponse.data.service}`,
             );
         },
     });

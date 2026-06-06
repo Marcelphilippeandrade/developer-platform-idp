@@ -2,17 +2,17 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 
 metadata:
-  name: payment-service-ingress
+  name: invoice-service-ingress
 
 spec:
   rules:
-    - host: payment-service.local
+    - host: invoice-service.local
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: payment-service
+                name: invoice-service
                 port:
                   number: 80

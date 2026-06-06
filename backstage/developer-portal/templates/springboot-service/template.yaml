@@ -54,4 +54,17 @@ spec:
     text:
       - title: Service Created
         content: |
-          Spring Boot service template executed successfully.
+          Service Name:
+          ${{ steps['generate-service'].output.serviceName }}
+
+          Package:
+          ${{ steps['generate-service'].output.packageName }}
+
+          Container Port:
+          ${{ steps['generate-service'].output.containerPort }}
+
+          Node Port:
+          ${{ steps['generate-service'].output.nodePort }}
+
+          Location:
+          ${{ steps['generate-service'].output.location }}
