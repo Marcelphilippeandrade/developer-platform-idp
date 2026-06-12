@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: invoice-service
+  name: github-push-test
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: invoice-service
+      app: github-push-test
   template:
     metadata:
       labels:
-        app: invoice-service
+        app: github-push-test
     spec:
       imagePullSecrets:
         - name: ghcr-secret
       containers:
-        - name: invoice-service
-          image: ghcr.io/marcelphilippeandrade/invoice-service
+        - name: github-push-test
+          image: ghcr.io/marcelphilippeandrade/github-push-test
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

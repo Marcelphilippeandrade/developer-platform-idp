@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: invoice-service
+  name: catalog-test-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: invoice-service
+      app: catalog-test-service
   template:
     metadata:
       labels:
-        app: invoice-service
+        app: catalog-test-service
     spec:
       imagePullSecrets:
         - name: ghcr-secret
       containers:
-        - name: invoice-service
-          image: ghcr.io/marcelphilippeandrade/invoice-service
+        - name: catalog-test-service
+          image: ghcr.io/marcelphilippeandrade/catalog-test-service
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

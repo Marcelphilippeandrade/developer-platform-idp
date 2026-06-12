@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: catalog-test-v2-ingress
+
+spec:
+  rules:
+    - host: catalog-test-v2.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: catalog-test-v2
+                port:
+                  number: 80

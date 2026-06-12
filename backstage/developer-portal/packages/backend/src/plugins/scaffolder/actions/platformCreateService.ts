@@ -53,10 +53,18 @@ export const platformCreateService = () => {
                     z.string({
                         description: 'Diretório do projeto',
                     }),
+
+                catalogInfoPath: z =>
+                    z.string({
+                        description: 'Catalog info path',
+                    }),
             },
         },
 
         async handler(ctx) {
+
+            ctx.logger.info(`Workspace: ${ctx.workspacePath}`);
+
             const generateServiceResponse = await axios.post(
                 'http://localhost:8000/generate-service',
                 {
@@ -64,6 +72,7 @@ export const platformCreateService = () => {
                     packageName: ctx.input.packageName,
                     containerPort: ctx.input.containerPort,
                     nodePort: ctx.input.nodePort,
+                    targetPath: ctx.workspacePath,
                 },
             );
 
@@ -94,6 +103,16 @@ export const platformCreateService = () => {
             ctx.output(
                 'location',
                 `/home/marcel/platform/dev/${generateServiceResponse.data.service}`,
+            );
+
+            ctx.output(
+                'location',
+                ctx.workspacePath,
+            );
+
+            ctx.output(
+                'location',
+                generateServiceResponse.data.location,
             );
         },
     });

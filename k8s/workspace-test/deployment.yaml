@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: invoice-service
+  name: workspace-test
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: invoice-service
+      app: workspace-test
   template:
     metadata:
       labels:
-        app: invoice-service
+        app: workspace-test
     spec:
       imagePullSecrets:
         - name: ghcr-secret
       containers:
-        - name: invoice-service
-          image: ghcr.io/marcelphilippeandrade/invoice-service
+        - name: workspace-test
+          image: ghcr.io/marcelphilippeandrade/workspace-test
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

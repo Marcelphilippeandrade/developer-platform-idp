@@ -8,6 +8,7 @@ SERVICE_NAME=$1
 PACKAGE_NAME=$2
 CONTAINER_PORT=$3
 NODE_PORT=$4
+TARGET_PATH=$5
 
 # ==============================
 # VALIDATION
@@ -24,7 +25,7 @@ fi
 # ==============================
 
 TEMPLATE_DIR=~/platform/templates/springboot-api
-TARGET_DIR=~/platform/dev/$SERVICE_NAME
+TARGET_DIR=$TARGET_PATH
 
 PACKAGE_PATH=$(echo $PACKAGE_NAME | tr '.' '/')
 

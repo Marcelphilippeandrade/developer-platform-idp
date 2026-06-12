@@ -17,6 +17,7 @@ class GenerateServiceRequest(BaseModel):
     packageName: str
     containerPort: int
     nodePort: int
+    targetPath: str
 
 # ==============================
 # ROOT
@@ -40,7 +41,8 @@ def generate_service(request: GenerateServiceRequest):
         request.serviceName,
         request.packageName,
         str(request.containerPort),
-        str(request.nodePort)
+        str(request.nodePort),
+        request.targetPath
     ]
 
     result = subprocess.run(
