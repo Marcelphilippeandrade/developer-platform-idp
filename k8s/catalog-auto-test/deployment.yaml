@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-auto-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: catalog-auto-test
+  template:
+    metadata:
+      labels:
+        app: catalog-auto-test
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: catalog-auto-test
+          image: ghcr.io/marcelphilippeandrade/catalog-auto-test
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5

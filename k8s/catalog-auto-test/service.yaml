@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: catalog-auto-test
+
+spec:
+  type: NodePort
+
+  selector:
+    app: catalog-auto-test
+
+  ports:
+    - port: 80
+      targetPort: 8080
+      nodePort: 30082
