@@ -1,114 +1,150 @@
-# 🚀 Developer Platform (IDP)
+# 🚀 Internal Developer Platform (IDP)
 
 ![Java](https://img.shields.io/badge/Java-21-orange)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-brightgreen)
+![Backstage](https://img.shields.io/badge/Backstage-Enabled-purple)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-Minikube-blue)
 ![GitHub Actions](https://img.shields.io/badge/CI/CD-GitHub_Actions-black)
 ![Docker](https://img.shields.io/badge/Docker-Enabled-blue)
 
-Internal Developer Platform (IDP) focused on automating the provisioning, CI/CD pipeline, and Kubernetes deployment of Spring Boot services.
+Internal Developer Platform (IDP) built with Backstage, Kubernetes, GitHub Actions and Spring Boot templates to automate service provisioning, software delivery and platform operations.
 
 ---
 
 # 📌 Overview
 
-This project was created to accelerate backend service creation and standardize deployment workflows using modern platform engineering practices.
+This project was created to explore Platform Engineering concepts and build a complete Internal Developer Platform capable of provisioning, deploying and managing backend services with minimal manual intervention.
 
 The platform automates:
 
 * Spring Boot service generation
-* CI/CD pipeline execution
+* GitHub repository creation
+* Source code publishing
+* Service registration in Backstage Catalog
+* CI/CD execution
 * Docker image build and push
 * Kubernetes deployment
 * Rollout validation
-* Automatic rollback on failure
+* Automatic rollback
 
 ---
 
-# 🧠 Architecture
+# 🏗️ Platform Architecture
 
 ```text
 Developer
-   ↓
-Git Push
-   ↓
-GitHub Actions (CI/CD)
-   ↓
+   │
+   ▼
+Backstage Portal
+   │
+   ▼
+Software Template
+   │
+   ▼
+Custom Scaffolder Action
+   │
+   ▼
+Spring Boot Generator
+   │
+   ▼
+GitHub Repository Creation
+   │
+   ▼
+Source Code Push
+   │
+   ▼
+Catalog Registration
+   │
+   ▼
+GitHub Actions
+   │
+   ▼
 Docker Build
-   ↓
-GitHub Container Registry (GHCR)
-   ↓
-Kubernetes Cluster (Minikube)
-   ↓
-┌───────────────────────┐
-│   payment-service     │
-│   order-service       │
-└───────────────────────┘
-   ↓
-Services + Ingress
-   ↓
-Cloudflare Tunnel
-   ↓
-Internet 🌍
+   │
+   ▼
+GHCR
+   │
+   ▼
+Kubernetes Cluster
 ```
 
 ---
 
-## 🧠 Platform Architecture
+# 🧠 Provisioning Workflow
 
 ```mermaid
 flowchart TD
 
-A[Developer] --> B[GitHub Repository]
+A[Developer] --> B[Backstage Template]
 
-B --> C[GitHub Actions CI/CD]
+B --> C[Custom Scaffolder Action]
 
-C --> D[Build Spring Boot App]
+C --> D[Spring Boot Generator]
 
-D --> E[Build Docker Image]
+D --> E[Create GitHub Repository]
 
-E --> F[Push to GHCR]
+E --> F[Push Source Code]
 
-F --> G[Kubernetes Cluster]
+F --> G[Register Component]
 
-G --> H[payment-service]
+G --> H[Backstage Catalog]
 
-G --> I[order-service]
+F --> I[GitHub Actions]
 
-H --> J[Service + Ingress]
+I --> J[Docker Build]
 
-I --> K[Service + Ingress]
+J --> K[Push to GHCR]
 
-J --> L[Cloudflare Tunnel]
-
-K --> L
-
-L --> M[Internet]
+K --> L[Kubernetes Deployment]
 ```
 
 ---
 
-# 🎥 Demo
+# 🧩 Backstage Features
 
-## CI/CD Pipeline
+The platform currently supports:
 
-## Kubernetes Deployment
-
-## Backstage Template
+* Software Templates
+* Custom Scaffolder Actions
+* Spring Boot Service Generation
+* Workspace-based Scaffolder Execution
+* Automatic GitHub Repository Creation
+* Automatic Source Code Push
+* Automatic Catalog Registration
+* Service Discovery through Catalog
 
 ---
 
 # ⚙️ Technologies
 
+* Backstage
+* TypeScript
+* Node.js
+* Python
+* Bash
 * Java 21
-* Spring Boot
+* Spring Boot 3
+* Maven
 * Docker
-* Kubernetes (Minikube)
 * GitHub Actions
 * GitHub Container Registry (GHCR)
-* Cloudflare Tunnel
-* Backstage
-* GitOps concepts
+* Kubernetes (Minikube)
+
+---
+
+# 🔄 Automated Provisioning Flow
+
+When a developer creates a new service through Backstage:
+
+1. Fill template parameters
+2. Generate Spring Boot project
+3. Create GitHub repository
+4. Push generated source code
+5. Register component in Catalog
+6. Trigger CI/CD pipeline
+7. Deploy to Kubernetes
+
+No manual repository creation or Catalog registration is required.
 
 ---
 
@@ -116,12 +152,13 @@ L --> M[Internet]
 
 The pipeline automatically performs:
 
-1. Maven build
-2. Docker image build
-3. Docker push to GHCR
-4. Kubernetes deployment
-5. Rollout validation
-6. Automatic rollback on failure
+1. Maven Build
+2. Unit Tests
+3. Docker Build
+4. Docker Push
+5. Kubernetes Deployment
+6. Rollout Validation
+7. Automatic Rollback
 
 ---
 
@@ -145,99 +182,84 @@ If deployment validation fails, Kubernetes automatically rolls back to the previ
 
 ## Start Kubernetes
 
-```bash id="pcjlwm"
+```bash
 minikube start
 ```
 
----
-
 ## Start GitHub Runner
 
-```bash id="qdjlwm"
+```bash
 cd ~/platform/runners/github/actions-runner
 ./run.sh
 ```
 
----
+## Start Backstage
 
-## Expose Application Locally
+```bash
+cd ~/platform/backstage/developer-portal
+yarn dev
+```
 
-```bash id="jlwmes"
-kubectl port-forward deployment/payment-service 8080:8080
+## Start Generator API
+
+```bash
+cd ~/platform/generators
+uvicorn main:app --reload --port 8000
 ```
 
 ---
 
-## Expose Publicly via Cloudflare
+# 🧪 Creating a New Service
 
-```bash id="jlwmfs"
-cloudflared tunnel --url http://127.0.0.1:8080
-```
+1. Open Backstage
+2. Create Component
+3. Select Spring Boot Template
+4. Fill service parameters
+5. Submit template
 
----
+The platform automatically:
 
-# 🧪 Health Check
-
-```bash id="jlwmgs"
-curl http://localhost:8080/health
-```
-
-Expected response:
-
-```text id="jlwmhs"
-service running
-```
+* Generates source code
+* Creates GitHub repository
+* Pushes code
+* Registers the component in Catalog
 
 ---
 
-# 💡 Key Features
+# 💡 Current Capabilities
 
-* Automated CI/CD
-* Kubernetes deployment automation
-* Versioned deployments using commit SHA
-* Rollout validation
-* Automatic rollback
-* Internal Developer Platform foundation
-* Infrastructure standardization
-
----
-
-# 🧩 Multi-Service Architecture
-
-The platform now supports multiple services running simultaneously inside the same Kubernetes cluster.
-
-Current services:
-
-- payment-service
-- order-service
-
-Each service contains its own:
-
-- Kubernetes Deployment
-- Kubernetes Service
-- Ingress configuration
-- CI/CD pipeline
-- Rollback strategy
-
-This architecture enables scalability, service isolation, and future expansion into a real microservices platform.
+* Self-Service Developer Portal
+* Automated Service Provisioning
+* GitHub Integration
+* Service Catalog
+* Kubernetes Deployments
+* CI/CD Automation
+* Platform Standardization
 
 ---
 
-# 🎯 Future Improvements
+# 🎯 Next Steps
 
-* Shared GitHub Runner
+## Phase 2 — Platform Engineering
+
+Planned improvements:
+
+* Template versioning
+* Multiple service templates
+* Golden Paths
 * Kubernetes namespaces
+* Service ownership model
+* Prometheus integration
+* Grafana dashboards
+* ArgoCD GitOps
 * AWS EKS deployment
-* Prometheus + Grafana observability
-* Canary deployments
-* Blue/Green strategy
-* Dynamic service templates
-* Shared cluster ingress controller
-* Service discovery
-* API Gateway
+* Developer Scorecards
+* Platform Metrics
 
 ---
 
 # 👨‍💻 Author
 
 Marcel Philippe Andrade
+
+Platform Engineering Lab Project
