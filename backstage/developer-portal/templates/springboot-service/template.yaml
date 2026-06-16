@@ -95,5 +95,5 @@ spec:
           Node Port:
           ${{ steps['generate-service'].output.nodePort }}
 
-          Location:
-          ${{ steps['generate-service'].output.location }}
+          Repository:
+          https://github.com/marcel-platform/${{ parameters.repositoryName }}

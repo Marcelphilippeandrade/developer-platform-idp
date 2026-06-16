@@ -49,11 +49,6 @@ export const platformCreateService = () => {
                         description: 'NodePort Kubernetes',
                     }),
 
-                location: z =>
-                    z.string({
-                        description: 'Diretório do projeto',
-                    }),
-
                 catalogInfoPath: z =>
                     z.string({
                         description: 'Catalog info path',
@@ -98,21 +93,6 @@ export const platformCreateService = () => {
             ctx.output(
                 'nodePort',
                 ctx.input.nodePort,
-            );
-
-            ctx.output(
-                'location',
-                `/home/marcel/platform/dev/${generateServiceResponse.data.service}`,
-            );
-
-            ctx.output(
-                'location',
-                ctx.workspacePath,
-            );
-
-            ctx.output(
-                'location',
-                generateServiceResponse.data.location,
             );
         },
     });

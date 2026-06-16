@@ -52,10 +52,10 @@ $TARGET_DIR/.github/workflows/ci.yml
 # CREATE K8S STRUCTURE
 # ==============================
 
-mkdir -p ~/platform/k8s/$SERVICE_NAME
+mkdir -p $TARGET_DIR/k8s
 
 cp $TEMPLATE_DIR/k8s/* \
-~/platform/k8s/$SERVICE_NAME/
+$TARGET_DIR/k8s/
 
 # ==============================
 # REPLACE PLACEHOLDERS
@@ -74,18 +74,6 @@ find $TARGET_DIR -type f -exec sed -i "s|{{CONTAINER_PORT}}|$CONTAINER_PORT|g" {
 find $TARGET_DIR -type f -exec sed -i "s|{{NODE_PORT}}|$NODE_PORT|g" {} \;
 
 find $TARGET_DIR -type f -exec sed -i "s|{{IMAGE_NAME}}|ghcr.io/marcelphilippeandrade/$SERVICE_NAME|g" {} \;
-
-# ==============================
-# REPLACE K8S FILES
-# ==============================
-
-find ~/platform/k8s/$SERVICE_NAME -type f -exec sed -i "s|{{SERVICE_NAME}}|$SERVICE_NAME|g" {} \;
-
-find ~/platform/k8s/$SERVICE_NAME -type f -exec sed -i "s|{{CONTAINER_PORT}}|$CONTAINER_PORT|g" {} \;
-
-find ~/platform/k8s/$SERVICE_NAME -type f -exec sed -i "s|{{NODE_PORT}}|$NODE_PORT|g" {} \;
-
-find ~/platform/k8s/$SERVICE_NAME -type f -exec sed -i "s|{{IMAGE_NAME}}|ghcr.io/marcelphilippeandrade/$SERVICE_NAME|g" {} \;
 
 # ==============================
 # REORGANIZE JAVA PACKAGE
