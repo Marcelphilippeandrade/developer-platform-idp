@@ -7,5 +7,5 @@ metadata:
 
 spec:
   type: service
-  owner: backend-team
+  owner: {{OWNER}}
   lifecycle: experimental

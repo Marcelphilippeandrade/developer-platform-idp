@@ -18,6 +18,7 @@ spec:
         - containerPort
         - nodePort
         - repositoryName
+        - owner
 
       properties:
         serviceName:
@@ -45,6 +46,11 @@ spec:
           type: string
           description: GitHub repository name
 
+        owner:
+          title: Owner
+          type: string
+          description: Team responsible for the service
+
   steps:
     - id: generate-service
       name: Generate Spring Boot Service
@@ -54,6 +60,7 @@ spec:
         packageName: ${{ parameters.packageName }}
         containerPort: ${{ parameters.containerPort }}
         nodePort: ${{ parameters.nodePort }}
+        owner: ${{ parameters.owner }}
 
     - id: create-github-repository
       name: Create GitHub Repository

@@ -26,6 +26,11 @@ export const platformCreateService = () => {
                     z.number({
                         description: 'NodePort Kubernetes',
                     }),
+
+                owner: z =>
+                    z.string({
+                        description: 'Owner do serviço',
+                    }),
             },
 
             output: {
@@ -49,9 +54,9 @@ export const platformCreateService = () => {
                         description: 'NodePort Kubernetes',
                     }),
 
-                catalogInfoPath: z =>
+                owner: z =>
                     z.string({
-                        description: 'Catalog info path',
+                        description: 'Owner do serviço',
                     }),
             },
         },
@@ -68,6 +73,7 @@ export const platformCreateService = () => {
                     containerPort: ctx.input.containerPort,
                     nodePort: ctx.input.nodePort,
                     targetPath: ctx.workspacePath,
+                    owner: ctx.input.owner,
                 },
             );
 
@@ -93,6 +99,11 @@ export const platformCreateService = () => {
             ctx.output(
                 'nodePort',
                 ctx.input.nodePort,
+            );
+
+            ctx.output(
+                'owner',
+                ctx.input.owner,
             );
         },
     });
