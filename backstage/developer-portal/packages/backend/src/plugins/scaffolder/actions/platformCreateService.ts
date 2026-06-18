@@ -31,6 +31,11 @@ export const platformCreateService = () => {
                     z.string({
                         description: 'Owner do serviço',
                     }),
+
+                system: z =>
+                    z.string({
+                        description: 'System',
+                    }),
             },
 
             output: {
@@ -58,6 +63,11 @@ export const platformCreateService = () => {
                     z.string({
                         description: 'Owner do serviço',
                     }),
+
+                system: z =>
+                    z.string({
+                        description: 'System',
+                    }),
             },
         },
 
@@ -74,6 +84,7 @@ export const platformCreateService = () => {
                     nodePort: ctx.input.nodePort,
                     targetPath: ctx.workspacePath,
                     owner: ctx.input.owner,
+                    system: ctx.input.system,
                 },
             );
 
@@ -104,6 +115,11 @@ export const platformCreateService = () => {
             ctx.output(
                 'owner',
                 ctx.input.owner,
+            );
+
+            ctx.output(
+                'system',
+                ctx.input.system,
             );
         },
     });

@@ -19,6 +19,7 @@ spec:
         - nodePort
         - repositoryName
         - owner
+        - system
 
       properties:
         serviceName:
@@ -51,6 +52,11 @@ spec:
           type: string
           description: Team responsible for the service
 
+        system:
+          title: System
+          type: string
+          description: Business system
+
   steps:
     - id: generate-service
       name: Generate Spring Boot Service
@@ -61,6 +67,7 @@ spec:
         containerPort: ${{ parameters.containerPort }}
         nodePort: ${{ parameters.nodePort }}
         owner: ${{ parameters.owner }}
+        system: ${{ parameters.system }}
 
     - id: create-github-repository
       name: Create GitHub Repository
@@ -104,3 +111,9 @@ spec:
 
           Repository:
           https://github.com/marcel-platform/${{ parameters.repositoryName }}
+
+          Owner:
+          ${{ steps['generate-service'].output.owner }}
+
+          System:
+          ${{ steps['generate-service'].output.system }}

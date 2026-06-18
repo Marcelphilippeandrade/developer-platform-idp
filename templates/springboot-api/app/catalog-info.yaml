@@ -8,4 +8,5 @@ metadata:
 spec:
   type: service
   owner: {{OWNER}}
+  system: {{SYSTEM}}
   lifecycle: experimental

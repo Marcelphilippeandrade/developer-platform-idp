@@ -10,6 +10,7 @@ CONTAINER_PORT=$3
 NODE_PORT=$4
 TARGET_PATH=$5
 OWNER=$6
+SYSTEM=$7
 
 # ==============================
 # VALIDATION
@@ -77,6 +78,8 @@ find $TARGET_DIR -type f -exec sed -i "s|{{NODE_PORT}}|$NODE_PORT|g" {} \;
 find $TARGET_DIR -type f -exec sed -i "s|{{IMAGE_NAME}}|ghcr.io/marcelphilippeandrade/$SERVICE_NAME|g" {} \;
 
 find $TARGET_DIR -type f -exec sed -i "s|{{OWNER}}|$OWNER|g" {} \;
+
+find $TARGET_DIR -type f -exec sed -i "s|{{SYSTEM}}|$SYSTEM|g" {} \;
 
 # ==============================
 # REORGANIZE JAVA PACKAGE
