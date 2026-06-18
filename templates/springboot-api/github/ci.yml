@@ -21,9 +21,10 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+          cache: 'maven'
 
       - name: Build with Maven
-        run: mvn clean install
+        run: mvn clean package
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
@@ -38,22 +39,17 @@ jobs:
 
       # Commit SHA as image tag
       - name: Set image tag
-        run: echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
+        run: |
+          echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
+          echo "LATEST_TAG=latest" >> $GITHUB_ENV
 
       - name: Build Docker Image
-        run: docker build -t $IMAGE_NAME:$IMAGE_TAG .
+        run: |
+          docker build \
+            -t $IMAGE_NAME:$IMAGE_TAG \
+            -t $IMAGE_NAME:$LATEST_TAG .
 
       - name: Push Docker Image
-        run: docker push $IMAGE_NAME:$IMAGE_TAG
-
-      # Kubernetes Deploy
-      - name: Deploy to Kubernetes
         run: |
-          kubectl set image deployment/{{SERVICE_NAME}} {{SERVICE_NAME}}=$IMAGE_NAME:$IMAGE_TAG
-
-      - name: Wait for rollout
-        run: kubectl rollout status deployment/{{SERVICE_NAME}}
-
-      - name: Rollback if failed
-        if: failure()
-        run: kubectl rollout undo deployment/{{SERVICE_NAME}}
+          docker push $IMAGE_NAME:$IMAGE_TAG
+          docker push $IMAGE_NAME:$LATEST_TAG

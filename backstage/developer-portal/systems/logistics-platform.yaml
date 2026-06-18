@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+
+metadata:
+  name: logistics-platform
+  description: Logistics domain platform
+
+spec:
+  owner: squad-logistics

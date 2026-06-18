@@ -127,6 +127,12 @@ catalog:
       rules:
         - allow: [Template]
 
+    # Business Systems
+    - type: file
+      target: ../../systems/logistics-platform.yaml
+      rules:
+        - allow: [System]
+
     ## Uncomment these lines to add more example data
     # - type: url
     #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
