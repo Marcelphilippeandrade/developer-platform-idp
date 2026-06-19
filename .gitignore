@@ -8,13 +8,17 @@ dist/
 .yarn/
 .pnp.*
 
-# Runner
-# GitHub Runner
-runners/github/actions-runner/
-runners/github/actions-runner/_work/
-runners/github/actions-runner/.runner
-runners/github/actions-runner/.credentials
-runners/github/actions-runner/.credentials_rsaparams
+# GitHub Runners
+runners/
+
+# GitHub Actions Workspace
+_work/
+
+# Generated projects by runner
+runners/**/_work/
+
+# Java
+target/
 
 # Env
 .env
