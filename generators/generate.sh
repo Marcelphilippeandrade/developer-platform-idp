@@ -75,7 +75,8 @@ find $TARGET_DIR -type f -exec sed -i "s|{{CONTAINER_PORT}}|$CONTAINER_PORT|g" {
 
 find $TARGET_DIR -type f -exec sed -i "s|{{NODE_PORT}}|$NODE_PORT|g" {} \;
 
-find $TARGET_DIR -type f -exec sed -i "s|{{IMAGE_NAME}}|ghcr.io/marcelphilippeandrade/$SERVICE_NAME|g" {} \;
+find $TARGET_DIR -type f -exec sed -i \
+"s|{{IMAGE_NAME}}|ghcr.io/marcel-platform/$SERVICE_NAME|g" {} \;
 
 find $TARGET_DIR -type f -exec sed -i "s|{{OWNER}}|$OWNER|g" {} \;
 

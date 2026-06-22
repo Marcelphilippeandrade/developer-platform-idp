@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: golden-path-validation-api-ingress
+
+spec:
+  rules:
+    - host: golden-path-validation-api.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: golden-path-validation-api
+                port:
+                  number: 80

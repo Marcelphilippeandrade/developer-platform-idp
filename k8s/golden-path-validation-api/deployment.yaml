@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: golden-path-validation-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: golden-path-validation-api
+  template:
+    metadata:
+      labels:
+        app: golden-path-validation-api
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: golden-path-validation-api
+          image: ghcr.io/marcel-platform/golden-path-validation-api
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 9090
+            initialDelaySeconds: 5
+            periodSeconds: 5
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 9090
+            initialDelaySeconds: 10
+            periodSeconds: 5
