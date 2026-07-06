@@ -30,7 +30,12 @@ Ao final deste guia será possível:
 - Yarn
 - Docker Desktop
 - Kubernetes
+  - kubectl
+  - Minikube
 - GitHub
+  - Personal Access Token
+  - Variáveis de ambiente
+  - GitHub Runner
 - GitHub Container Registry (GHCR)
 - Backstage
 - Platform API
@@ -465,12 +470,147 @@ Caso a variável esteja configurada corretamente, o terminal deverá exibir o to
 
 #### Problemas comuns
 
-- Token expirado.
-- Token não configurado.
-- Escopos insuficientes.
-- Token não carregado no ambiente.
+- Token expirado
+- Token não configurado
+- Escopos insuficientes
+- Token não carregado no ambiente
 
 ---
+
+### Variáveis de ambiente
+
+#### Objetivo
+
+Centralizar todas as configurações locais necessárias para execução da Developer Platform.
+
+---
+
+#### Arquivo `.env.example`
+
+O arquivo `.env.example` serve como modelo para criação do arquivo `.env`, contendo apenas exemplos de configuração utilizados pela Developer Platform.
+
+##### Boas práticas
+
+O arquivo `.env.example` **não deve conter informações sensíveis**.
+
+Nunca adicione:
+
+- Personal Access Tokens (PAT)
+- Senhas
+- Chaves privadas
+- GitHub Secrets
+- Credenciais de provedores Cloud (AWS, Azure, GCP, Cloudflare, etc.)
+
+As credenciais reais devem existir apenas no arquivo `.env`, que está listado no `.gitignore` e nunca deve ser versionado.
+
+##### Exemplo
+
+Arquivo `.env.example`:
+
+```text
+GITHUB_TOKEN=
+GHCR_USERNAME=your-github-username
+MINIKUBE_PROFILE=minikube
+BACKSTAGE_PORT=3000
+PLATFORM_API_PORT=8000
+```
+
+Após copiar o arquivo:
+
+```bash
+cp .env.example .env
+```
+
+Edite o arquivo `.env` informando os valores reais do ambiente.
+
+##### Observação
+
+O GitHub Push Protection bloqueia automaticamente commits contendo credenciais válidas.
+
+Caso isso ocorra:
+
+- Remova imediatamente o segredo do arquivo.
+- Recrie o commit utilizando `git commit --amend`.
+- Realize um novo push.
+
+---
+
+#### Carregando as variáveis de ambiente
+
+Após configurar o arquivo `.env`, carregue as variáveis antes de executar qualquer componente da Developer Platform:
+
+```bash
+source scripts/load-env.sh
+```
+
+O bootstrap executará automaticamente:
+
+- Validação da existência do arquivo `.env`
+- Carregamento das variáveis de ambiente
+- Validação das variáveis obrigatórias
+- Interrupção da execução caso alguma configuração esteja ausente (Fail Fast)
+
+Valide se as variáveis foram carregadas corretamente:
+
+```bash
+echo $GITHUB_TOKEN
+echo $BACKSTAGE_PORT
+echo $PLATFORM_API_PORT
+```
+
+Resultado esperado:
+
+```text
+ghp_xxxxxxxxxxxxxxxxxxxxxxxxx
+3000
+8000
+```
+
+##### Importante
+
+Não execute:
+
+```bash
+./scripts/load-env.sh
+```
+
+nem:
+
+```bash
+bash scripts/load-env.sh
+```
+
+Esses comandos executam o script em um novo processo (*subshell*). Como consequência, as variáveis de ambiente são descartadas ao final da execução e **não permanecem disponíveis** no terminal atual.
+
+Sempre utilize:
+
+```bash
+source scripts/load-env.sh
+```
+
+---
+
+### GitHub Runner
+
+#### Objetivo
+
+Executar localmente os workflows do GitHub Actions utilizando um Self-hosted Runner.
+
+#### Verificação
+
+Inicie o Runner:
+
+```bash
+./run.sh
+```
+
+Ou verifique no GitHub se o Runner aparece com o status **Idle**.
+
+#### Problemas comuns
+
+- Runner Offline
+- Runner removido do repositório
+- Token expirado
 
 ### Arquivo .env.example
 
@@ -526,9 +666,7 @@ Caso isso ocorra:
 
 ### Carregando as variáveis de ambiente
 
-Após configurar o arquivo `.env`, carregue as variáveis de ambiente:
-
-Antes de executar qualquer componente da Developer Platform, carregue as variáveis de ambiente:
+Após configurar o arquivo `.env`, carregue as variáveis antes de executar qualquer componente da Developer Platform:
 
 ```bash
 source scripts/load-env.sh
@@ -536,16 +674,12 @@ source scripts/load-env.sh
 
 O bootstrap executará automaticamente:
 
+Caso alguma configuração obrigatória esteja ausente, o bootstrap interromperá imediatamente a execução (Fail Fast), informando qual variável deve ser corrigida.
+
 - Validação da existência do arquivo `.env`
 - Carregamento das variáveis de ambiente
 - Validação das variáveis obrigatórias
 - Interrupção da execução caso alguma configuração esteja ausente
-
-Em caso de sucesso, será exibida uma mensagem informando que o ambiente foi carregado corretamente.
-
-```bash
-source scripts/load-env.sh
-```
 
 Valide se as variáveis foram carregadas corretamente:
 
@@ -553,6 +687,13 @@ Valide se as variáveis foram carregadas corretamente:
 echo $GITHUB_TOKEN
 echo $BACKSTAGE_PORT
 echo $PLATFORM_API_PORT
+```
+Resultado esperado:
+
+```text
+ghp_xxxxxxxxxxxxxxxxxxxxxxxxx
+3000
+8000
 ```
 
 #### Importante
