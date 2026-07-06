@@ -451,42 +451,156 @@ Resultado esperado:
 
 #### Objetivo
 
-Permitir que o Backstage crie repositórios automaticamente.
+Permitir que o Backstage crie repositórios automaticamente utilizando a API do GitHub.
 
 #### Verificação
+
+Verifique se a variável de ambiente foi carregada corretamente:
 
 ```bash
 echo $GITHUB_TOKEN
 ```
 
+Caso a variável esteja configurada corretamente, o terminal deverá exibir o token.
+
 #### Problemas comuns
 
 - Token expirado.
-- Token não exportado.
+- Token não configurado.
 - Escopos insuficientes.
+- Token não carregado no ambiente.
+
+---
+
+### Arquivo .env.example
+
+#### Objetivo
+
+O arquivo `.env.example` serve como modelo para criação do arquivo `.env`, contendo apenas exemplos de configuração utilizados pela Developer Platform.
+
+#### Boas práticas
+
+O arquivo `.env.example` **não deve conter informações sensíveis**.
+
+Nunca adicione:
+
+- Personal Access Tokens (PAT)
+- Senhas
+- Chaves privadas
+- Secrets do GitHub
+- Credenciais de provedores Cloud (AWS, Azure, GCP, Cloudflare, etc.)
+
+As credenciais reais devem existir apenas no arquivo `.env`, que está listado no `.gitignore` e nunca deve ser versionado.
+
+#### Exemplo
+
+Arquivo `.env.example`:
+
+```text
+GITHUB_TOKEN=
+GHCR_USERNAME=your-github-username
+MINIKUBE_PROFILE=minikube
+BACKSTAGE_PORT=3000
+PLATFORM_API_PORT=8000
+```
+
+Após copiar o arquivo:
+
+```bash
+cp .env.example .env
+```
+
+Edite o arquivo `.env` informando os valores reais do ambiente.
+
+#### Observação
+
+O GitHub Push Protection bloqueia automaticamente commits contendo credenciais válidas.
+
+Caso isso ocorra:
+
+- Remova imediatamente o segredo do arquivo.
+- Recrie o commit utilizando `git commit --amend`.
+- Realize um novo push.
+
+---
+
+### Carregando as variáveis de ambiente
+
+Após configurar o arquivo `.env`, carregue as variáveis de ambiente:
+
+Antes de executar qualquer componente da Developer Platform, carregue as variáveis de ambiente:
+
+```bash
+source scripts/load-env.sh
+```
+
+O bootstrap executará automaticamente:
+
+- Validação da existência do arquivo `.env`
+- Carregamento das variáveis de ambiente
+- Validação das variáveis obrigatórias
+- Interrupção da execução caso alguma configuração esteja ausente
+
+Em caso de sucesso, será exibida uma mensagem informando que o ambiente foi carregado corretamente.
+
+```bash
+source scripts/load-env.sh
+```
+
+Valide se as variáveis foram carregadas corretamente:
+
+```bash
+echo $GITHUB_TOKEN
+echo $BACKSTAGE_PORT
+echo $PLATFORM_API_PORT
+```
+
+#### Importante
+
+Não execute:
+
+```bash
+./scripts/load-env.sh
+```
+
+nem:
+
+```bash
+bash scripts/load-env.sh
+```
+
+Esses comandos executam o script em um processo separado e as variáveis de ambiente **não permanecerão disponíveis** no terminal atual.
+
+Sempre utilize:
+
+```bash
+source scripts/load-env.sh
+```
+
+---
 
 ### GitHub Runner
 
 #### Objetivo
 
-Executar pipelines GitHub Actions localmente.
+Executar localmente os workflows do GitHub Actions utilizando um Self-hosted Runner.
 
 #### Verificação
+
+Inicie o Runner:
 
 ```bash
 ./run.sh
 ```
 
-ou
-
-Verificar no GitHub se o Runner aparece como **Idle**.
+Ou verifique no GitHub se o Runner aparece com o status **Idle**.
 
 #### Problemas comuns
 
-- Runner desligado.
+- Runner Offline.
 - Runner removido do repositório.
-
----
+- Token de registro expirado.
+- Serviço não iniciado.
 
 ## GitHub Container Registry (GHCR)
 
