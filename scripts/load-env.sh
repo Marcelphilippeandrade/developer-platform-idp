@@ -14,6 +14,19 @@ echo "========================================="
 echo ""
 
 # -----------------------------------------------------
+# Validate execution mode
+# -----------------------------------------------------
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    echo "ERROR: This script must be sourced."
+    echo ""
+    echo "Use:"
+    echo "  source scripts/load-env.sh"
+
+    return 1 2>/dev/null || exit 1
+fi
+
+# -----------------------------------------------------
 # Locate project root
 # -----------------------------------------------------
 
