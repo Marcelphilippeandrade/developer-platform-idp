@@ -100,12 +100,70 @@ else
 fi
 
 # -----------------------------------------------------
-# Prerequisites Validation
+# System Prerequisites Validation
 # -----------------------------------------------------
 echo ""
 echo "Checking prerequisites..."
 
-# TODO
+if command -v git >/dev/null 2>&1; then
+    echo "✓ Git"
+else
+    echo "✗ Git"
+    echo ""
+    echo "ERROR: Git is not installed."
+    echo ""
+    echo "Install it using:"
+    echo "sudo apt install git"
+
+    return 1 2>/dev/null || exit 1
+fi
+
+if command -v curl >/dev/null 2>&1; then
+    echo "✓ curl"
+else
+    echo "✗ curl"
+    echo ""
+    echo "ERROR: curl is not installed."
+    echo ""
+    echo "Install it using:"
+    echo "sudo apt install curl"
+fi
+
+if command -v wget >/dev/null 2>&1; then
+    echo "✓ wget"
+else
+    echo "✗ wget"
+    echo ""
+    echo "ERROR: wget is not installed."
+    echo ""
+    echo "Install it using:"
+    echo "sudo apt install wget"
+fi
+
+if command -v unzip >/dev/null 2>&1; then
+    echo "✓ unzip"
+else
+    echo "✗ unzip"
+    echo ""
+    echo "ERROR: unzip is not installed."
+    echo ""
+    echo "Install it using:"
+    echo "sudo apt install unzip"
+fi
+
+if command -v sudo >/dev/null 2>&1; then
+    echo "✓ sudo"
+else
+    echo "✗ sudo"
+    echo ""
+    echo "ERROR: sudo is not installed."
+    echo ""
+    echo "Please install sudo or use a supported Ubuntu installation."
+fi
+
+# -----------------------------------------------------
+# Developer Platform Components Validation
+# -----------------------------------------------------
 
 # -----------------------------------------------------
 # Components Installation
