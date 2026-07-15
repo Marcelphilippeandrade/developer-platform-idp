@@ -104,6 +104,7 @@ fi
 # -----------------------------------------------------
 echo ""
 echo "Checking prerequisites..."
+echo ""
 
 if command -v git >/dev/null 2>&1; then
     echo "✓ Git"
@@ -127,6 +128,8 @@ else
     echo ""
     echo "Install it using:"
     echo "sudo apt install curl"
+
+    return 1 2>/dev/null || exit 1
 fi
 
 if command -v wget >/dev/null 2>&1; then
@@ -138,6 +141,8 @@ else
     echo ""
     echo "Install it using:"
     echo "sudo apt install wget"
+
+    return 1 2>/dev/null || exit 1
 fi
 
 if command -v unzip >/dev/null 2>&1; then
@@ -149,6 +154,8 @@ else
     echo ""
     echo "Install it using:"
     echo "sudo apt install unzip"
+
+    return 1 2>/dev/null || exit 1
 fi
 
 if command -v sudo >/dev/null 2>&1; then
@@ -159,17 +166,82 @@ else
     echo "ERROR: sudo is not installed."
     echo ""
     echo "Please install sudo or use a supported Ubuntu installation."
+
+    return 1 2>/dev/null || exit 1
 fi
 
 # -----------------------------------------------------
-# Developer Platform Components Validation
+# Developer Platform Components
 # -----------------------------------------------------
+echo ""
+echo "Checking Developer Platform components..."
+echo ""
+
+if command -v java >/dev/null 2>&1; then
+    JAVA_VERSION="$(
+        java -version 2>&1 |
+        head -n 1 |
+        sed -E 's/.*"([^"]+)".*/\1/')"
+
+    echo "✓ Java"
+    echo "Version: $JAVA_VERSION"
+
+else
+
+    echo "✗ Java"
+    echo ""
+
+    echo "Java is required by the Developer Platform."
+    echo ""
+
+    read -rp "Install OpenJDK 21 now? [y/N]: " INSTALL_JAVA
+
+    if [[ "$INSTALL_JAVA" =~ ^[Yy]$ ]]; then
+        echo ""
+        echo "Installing OpenJDK 21..."
+        echo ""
+        echo "Updating package list..."
+
+        sudo apt update
+        
+        echo ""
+        echo "Package list updated successfully."
+
+        echo ""
+        echo "Installing OpenJDK 21..."
+
+        sudo apt install -y openjdk-21-jdk
+
+        if command -v java >/dev/null 2>&1; then
+            JAVA_VERSION="$(
+                java -version 2>&1 |
+                head -n 1 |
+                sed -E 's/.*"([^"]+)".*/\1/')"
+
+            echo ""
+            echo "✓ Java"
+            echo "Version: $JAVA_VERSION"
+        else
+            echo ""
+            echo "ERROR: Java installation failed."
+
+            return 1 2>/dev/null || exit 1
+
+    fi
+        else
+            echo ""
+            echo "Java installation skipped."
+
+            return 1 2>/dev/null || exit 1
+        fi
+fi
 
 # -----------------------------------------------------
 # Components Installation
 # -----------------------------------------------------
 echo ""
 echo "Installing required components..."
+echo ""
 
 # TODO
 
@@ -178,6 +250,7 @@ echo "Installing required components..."
 # -----------------------------------------------------
 echo ""
 echo "Configuring Developer Platform..."
+echo ""
 
 # TODO
 
@@ -186,4 +259,14 @@ echo "Configuring Developer Platform..."
 # -----------------------------------------------------
 
 echo ""
-echo "Developer Platform setup completed successfully."
+echo "========================================="
+echo " Setup completed successfully!"
+echo "========================================="
+echo ""
+echo "Developer Platform is ready to use."
+echo ""
+echo "Next steps:"
+echo "  1. source scripts/load-env.sh"
+echo "  2. Start Backstage"
+echo "  3. Start Platform API"
+echo ""
