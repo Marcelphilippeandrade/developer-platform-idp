@@ -173,18 +173,23 @@ fi
 # -----------------------------------------------------
 # Developer Platform Components
 # -----------------------------------------------------
+
 echo ""
 echo "Checking Developer Platform components..."
 echo ""
+
+# -----------------------------------------------------
+# Java
+# -----------------------------------------------------
 
 if command -v java >/dev/null 2>&1; then
     JAVA_VERSION="$(
         java -version 2>&1 |
         head -n 1 |
-        sed -E 's/.*"([^"]+)".*/\1/')"
+        sed -E 's/.*"([^"]+)".*/\1/'
+    )"
 
-    echo "✓ Java"
-    echo "Version: $JAVA_VERSION"
+    echo "✓ Java ($JAVA_VERSION)"
 
 else
 
@@ -216,11 +221,11 @@ else
             JAVA_VERSION="$(
                 java -version 2>&1 |
                 head -n 1 |
-                sed -E 's/.*"([^"]+)".*/\1/')"
+                sed -E 's/.*"([^"]+)".*/\1/'
+            )"
 
             echo ""
-            echo "✓ Java"
-            echo "Version: $JAVA_VERSION"
+            echo "✓ Java ($JAVA_VERSION)"
         else
             echo ""
             echo "ERROR: Java installation failed."
@@ -234,6 +239,68 @@ else
 
             return 1 2>/dev/null || exit 1
         fi
+fi
+
+# -----------------------------------------------------
+# Maven
+# -----------------------------------------------------
+
+if command -v mvn >/dev/null 2>&1; then
+
+    MAVEN_VERSION="$(
+        mvn -version |
+        head -n 1 |
+        sed -E 's/Apache Maven ([0-9.]+).*/\1/'
+    )"
+
+    echo "✓ Maven ($MAVEN_VERSION)"
+
+else
+
+    echo "✗ Maven"
+    echo ""
+
+    echo "Apache Maven is required by the Developer Platform."
+    echo ""
+
+    read -rp "Install Apache Maven now? [y/N]: " INSTALL_MAVEN
+
+    if [[ "$INSTALL_MAVEN" =~ ^[Yy]$ ]]; then
+
+        echo ""
+        echo "Installing Apache Maven..."
+        echo ""
+
+        sudo apt install -y maven
+
+        if command -v mvn >/dev/null 2>&1; then
+
+            MAVEN_VERSION="$(
+                mvn -version |
+                head -n 1 |
+                sed -E 's/Apache Maven ([0-9.]+).*/\1/'
+            )"
+
+            echo "✓ Maven ($MAVEN_VERSION)"
+
+        else
+
+            echo ""
+            echo "ERROR: Maven installation failed."
+
+            return 1 2>/dev/null || exit 1
+
+    fi
+
+    else
+
+        echo ""
+        echo "Maven installation skipped."
+
+        return 1 2>/dev/null || exit 1
+
+    fi
+
 fi
 
 # -----------------------------------------------------

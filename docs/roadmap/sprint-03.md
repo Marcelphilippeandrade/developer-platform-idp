@@ -18,7 +18,7 @@ Criação da estrutura inicial do `setup.sh`.
 
 Detecção do ambiente.
 
-Implementações:
+**Implementações:**
 
 - Sistema Operacional
 - Distribuição Linux
@@ -29,9 +29,9 @@ Implementações:
 
 ### Commit 3
 
-Validação dos pré-requisitos.
+Validação dos pré-requisitos do sistema.
 
-Implementações:
+**Implementações:**
 
 - Git
 - curl
@@ -45,34 +45,105 @@ Implementações:
 
 Instalação automática do Java.
 
-Implementações:
+**Implementações:**
 
 - Detecção do Java
-- Pergunta ao usuário
-- Atualização dos pacotes
+- Captura da versão instalada
+- Solicitação de instalação
+- Atualização da lista de pacotes
 - Instalação automática
-- Validação da instalação
-- Exibição da versão
+- Validação pós-instalação
+- Exibição da versão instalada
 - Testes ponta a ponta
 
 ---
 
 ### Commit 5
 
+Instalação automática do Apache Maven.
+
+**Implementações:**
+
+- Detecção do Maven
+- Captura da versão instalada
+- Solicitação de instalação
+- Instalação automática
+- Validação pós-instalação
+- Exibição da versão instalada
+- Testes ponta a ponta
+
+**Melhorias Futuras**
+
+- Detectar componentes instalados no Windows.
+- Recomendar instalação nativa no Ubuntu.
+- Validar o PATH da estação de desenvolvimento.
+
+---
+
+### Commit 6
+
 Em desenvolvimento.
 
 Próximas implementações:
 
-- Maven
 - Node.js
 - npm
+
+---
+
+### Commit 7
+
+Planejado.
+
+Próximas implementações:
+
 - Yarn
+
+---
+
+### Commit 8
+
+Planejado.
+
+Próximas implementações:
+
+- Docker
+
+---
+
+### Commit 9
+
+Planejado.
+
+Próximas implementações:
+
+- kubectl
+
+---
+
+### Commit 10
+
+Planejado.
+
+Próximas implementações:
+
+- Minikube
+
+---
+
+### Commit 11
+
+Planejado.
+
+Próximas implementações:
+
+- Resumo final da estação de desenvolvimento.
 
 ---
 
 ## Entregas
 
-- scripts/setup.sh
+- `scripts/setup.sh`
 
 ---
 
