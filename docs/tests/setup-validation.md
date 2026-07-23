@@ -75,7 +75,7 @@ Validar que o `setup.sh` instala automaticamente o OpenJDK 21 quando o Java não
 
 ---
 
-## Cenário 3 — Usuário cancela a instalação
+## Cenário 3 — Usuário cancela a instalação do Java
 
 ### Objetivo
 
@@ -153,6 +153,54 @@ Validar que o processo de instalação é interrompido quando o usuário opta po
 
 **PASS**
 
+---
+
+## Cenário 7 — Runtime Node.js já instalado
+
+### Objetivo
+
+Validar que o `setup.sh` detecta uma instalação existente do Runtime Node.js sem tentar reinstalar seus componentes.
+
+### Resultado esperado
+
+- Detectar o NVM.
+- Detectar o Node.js.
+- Detectar o npm.
+- Exibir as versões instaladas.
+- Não solicitar instalação.
+- Continuar a execução do setup.
+
+### Resultado obtido
+
+**PASS**
+
+---
+
+## Cenário 8 — Runtime Node.js não instalado
+
+### Objetivo
+
+Validar que o `setup.sh` instala automaticamente o Runtime Node.js quando ele não está disponível.
+
+### Resultado esperado
+
+- Detectar ausência do NVM.
+- Solicitar confirmação ao usuário.
+- Instalar o NVM.
+- Carregar o NVM na sessão atual.
+- Validar a instalação do NVM.
+- Instalar o Node.js LTS.
+- Validar o Node.js.
+- Validar o npm.
+- Exibir as versões instaladas.
+- Continuar a execução do setup.
+
+### Resultado obtido
+
+**PASS**
+
+---
+
 # Matriz de Validação
 
 | Cenário | Status |
@@ -163,6 +211,8 @@ Validar que o processo de instalação é interrompido quando o usuário opta po
 | Maven já instalado | ✅ PASS |
 | Instalação automática do Maven | ✅ PASS |
 | Cancelamento da instalação do Maven | ✅ PASS |
+| Runtime Node.js já instalado | ✅ PASS |
+| Instalação automática do Runtime Node.js | ✅ PASS |
 
 ---
 
@@ -172,19 +222,21 @@ Validar que o processo de instalação é interrompido quando o usuário opta po
 |------|--------|---------|-------------|
 | 15/07/2026 | Sprint 3 | Commit 4 | Marcel Philippe Abreu Andrade |
 | 16/07/2026 | Sprint 3 | Commit 5 | Marcel Philippe Abreu Andrade |
+| 22/07/2026 | Sprint 3 | Commit 6 | Marcel Philippe Abreu Andrade |
 
 ---
 
 # Conclusão
 
-Os testes executados confirmam que os fluxos de instalação automática do Java e do Apache Maven estão funcionando conforme o esperado para todos os cenários previstos.
+Os testes executados confirmam que os fluxos de instalação automática do Java, Apache Maven e Runtime Node.js estão funcionando conforme o esperado para todos os cenários previstos.
 
 Foram validados com sucesso:
 
 - Ambiente previamente configurado.
 - Ambiente sem o componente instalado.
-- Cancelamento da instalação pelo usuário.
+- Instalação automática dos componentes.
 - Validação pós-instalação.
-- Exibição da versão instalada.
+- Exibição das versões instaladas.
+- Continuidade do processo de configuração da estação de desenvolvimento após a instalação dos componentes.
 
-Com essa validação concluída, a arquitetura implementada para Java e Maven passa a servir como padrão para os próximos componentes da Developer Platform, como Node.js, npm, Yarn, Docker, kubectl e Minikube.
+Com essa validação concluída, a arquitetura implementada para Java, Apache Maven e Runtime Node.js passa a servir como padrão para os próximos componentes da Developer Platform, como Yarn, Docker, kubectl e Minikube.

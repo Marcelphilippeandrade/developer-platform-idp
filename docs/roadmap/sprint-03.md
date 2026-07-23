@@ -82,12 +82,31 @@ Instalação automática do Apache Maven.
 
 ### Commit 6
 
-Em desenvolvimento.
+Instalação automática do Runtime Node.js.
 
-Próximas implementações:
+**Implementações:**
 
-- Node.js
-- npm
+- Detecção do NVM
+- Instalação automática do NVM
+- Carregamento do NVM na sessão atual
+- Validação pós-instalação do NVM
+- Instalação automática do Node.js LTS
+- Validação do Node.js
+- Validação do npm
+- Exibição das versões instaladas
+- Tratamento de erro durante a instalação do Node.js
+- Testes ponta a ponta
+
+**Cenários Validados**
+
+- Ambiente com Runtime Node.js previamente instalado
+- Ambiente sem Runtime Node.js instalado
+
+**Melhorias Futuras**
+
+- Detectar automaticamente instalações do NVM mesmo quando `NVM_DIR` não estiver definido.
+- Tornar a detecção do Runtime Node.js mais resiliente ao ambiente do shell.
+- Melhorar o tratamento de falhas durante o download do instalador do NVM.
 
 ---
 

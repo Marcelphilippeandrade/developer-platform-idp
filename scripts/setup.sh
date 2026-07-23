@@ -5,6 +5,16 @@
 # =====================================================
 
 # -----------------------------------------------------
+# Platform Runtime Versions
+# -----------------------------------------------------
+
+JAVA_TARGET_VERSION="21"
+
+NVM_TARGET_VERSION="v0.40.3"
+
+NODE_TARGET_VERSION="lts/*"
+
+# -----------------------------------------------------
 # Banner
 # -----------------------------------------------------
 
@@ -102,6 +112,7 @@ fi
 # -----------------------------------------------------
 # System Prerequisites Validation
 # -----------------------------------------------------
+
 echo ""
 echo "Checking prerequisites..."
 echo ""
@@ -183,13 +194,13 @@ echo ""
 # -----------------------------------------------------
 
 if command -v java >/dev/null 2>&1; then
-    JAVA_VERSION="$(
+    INSTALLED_JAVA_VERSION="$(
         java -version 2>&1 |
         head -n 1 |
         sed -E 's/.*"([^"]+)".*/\1/'
     )"
 
-    echo "✓ Java ($JAVA_VERSION)"
+    echo "✓ Java ($INSTALLED_JAVA_VERSION)"
 
 else
 
@@ -218,14 +229,14 @@ else
         sudo apt install -y openjdk-21-jdk
 
         if command -v java >/dev/null 2>&1; then
-            JAVA_VERSION="$(
+            INSTALLED_JAVA_VERSION="$(
                 java -version 2>&1 |
                 head -n 1 |
                 sed -E 's/.*"([^"]+)".*/\1/'
             )"
 
             echo ""
-            echo "✓ Java ($JAVA_VERSION)"
+            echo "✓ Java ($INSTALLED_JAVA_VERSION)"
         else
             echo ""
             echo "ERROR: Java installation failed."
@@ -247,13 +258,13 @@ fi
 
 if command -v mvn >/dev/null 2>&1; then
 
-    MAVEN_VERSION="$(
+    INSTALLED_MAVEN_VERSION="$(
         mvn -version |
         head -n 1 |
         sed -E 's/Apache Maven ([0-9.]+).*/\1/'
     )"
 
-    echo "✓ Maven ($MAVEN_VERSION)"
+    echo "✓ Maven ($INSTALLED_MAVEN_VERSION)"
 
 else
 
@@ -275,13 +286,13 @@ else
 
         if command -v mvn >/dev/null 2>&1; then
 
-            MAVEN_VERSION="$(
+            INSTALLED_MAVEN_VERSION="$(
                 mvn -version |
                 head -n 1 |
                 sed -E 's/Apache Maven ([0-9.]+).*/\1/'
             )"
 
-            echo "✓ Maven ($MAVEN_VERSION)"
+            echo "✓ Maven ($INSTALLED_MAVEN_VERSION)"
 
         else
 
@@ -300,6 +311,123 @@ else
         return 1 2>/dev/null || exit 1
 
     fi
+
+fi
+
+# -----------------------------------------------------
+# Node.js Runtime
+# -----------------------------------------------------
+echo ""
+echo "Node.js Runtime:"
+
+# -----------------------------------------------------
+# NVM
+# -----------------------------------------------------
+
+if [[ -n "$NVM_DIR" && -s "$NVM_DIR/nvm.sh" ]]; then
+
+    # Load NVM into the current shell
+    . "$NVM_DIR/nvm.sh"
+
+    INSTALLED_NVM_VERSION="$(nvm --version)"
+
+    echo "✓ NVM ($INSTALLED_NVM_VERSION)"
+
+else
+
+    echo "✗ NVM"
+    echo ""
+
+    echo "Node.js Runtime is required by the Developer Platform."
+    echo ""
+
+    read -rp "Install Node.js Runtime now? [y/N]: " INSTALL_NODE_RUNTIME
+
+    if [[ "$INSTALL_NODE_RUNTIME" =~ ^[Yy]$ ]]; then
+
+        echo ""
+        echo "Installing Node.js Runtime..."
+        echo ""
+
+        echo "Installing NVM..."
+        echo ""
+        curl -fsSL "https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_TARGET_VERSION}/install.sh" | bash
+
+        export NVM_DIR="$HOME/.nvm"
+
+        if [[ -s "$NVM_DIR/nvm.sh" ]]; then
+            . "$NVM_DIR/nvm.sh"
+        fi
+
+        if command -v nvm >/dev/null 2>&1; then
+
+            INSTALLED_NVM_VERSION="$(nvm --version)"
+
+            echo ""
+            echo "✓ NVM ($INSTALLED_NVM_VERSION)"
+
+        else
+
+            echo ""
+            echo "ERROR: NVM installation failed."
+
+            return 1 2>/dev/null || exit 1
+
+        fi
+
+        echo ""
+        echo "Installing Node.js..."
+        echo ""
+
+        if ! nvm install "$NODE_TARGET_VERSION"; then
+
+            echo ""
+            echo "ERROR: Node.js installation failed."
+
+            return 1 2>/dev/null || exit 1
+
+        fi
+
+    else
+
+        echo ""
+        echo "Node.js Runtime installation skipped."
+
+        return 1 2>/dev/null || exit 1
+
+    fi
+
+fi
+
+# -----------------------------------------------------
+# Node.js
+# -----------------------------------------------------
+
+if command -v node >/dev/null 2>&1; then
+
+    INSTALLED_NODE_VERSION="$(node --version)"
+
+    echo "✓ Node.js (${INSTALLED_NODE_VERSION#v})"
+
+else
+
+    echo "✗ Node.js"
+
+fi
+
+# -----------------------------------------------------
+# npm
+# -----------------------------------------------------
+
+if command -v npm >/dev/null 2>&1; then
+
+    INSTALLED_NPM_VERSION="$(npm --version)"
+
+    echo "✓ npm ($INSTALLED_NPM_VERSION)"
+
+else
+
+    echo "✗ npm"
 
 fi
 
