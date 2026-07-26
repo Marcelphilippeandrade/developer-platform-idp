@@ -201,6 +201,69 @@ Validar que o `setup.sh` instala automaticamente o Runtime Node.js quando ele n�
 
 ---
 
+## Cenário 9 — Docker Desktop instalado, porém desligado
+
+### Objetivo
+
+Validar que o `setup.sh` detecta quando o Docker Desktop está instalado, porém não está em execução, orientando corretamente o usuário a iniciá-lo antes de continuar.
+
+### Resultado esperado
+
+- Detectar ausência do Docker CLI.
+- Detectar o Docker Desktop instalado.
+- Informar que o Docker Desktop não está em execução.
+- Orientar o usuário a iniciar o Docker Desktop.
+- Encerrar o setup.
+- Não executar a validação do Docker Compose.
+
+### Resultado obtido
+
+**PASS**
+
+---
+
+## Cenário 10 — Docker Desktop não instalado
+
+### Objetivo
+
+Validar que o `setup.sh` detecta a ausência do Docker Desktop e orienta corretamente o usuário para realizar sua instalação antes de prosseguir.
+
+### Resultado esperado
+
+- Detectar ausência do Docker CLI.
+- Detectar ausência do Docker Desktop.
+- Exibir instruções para instalação do Docker Desktop.
+- Orientar a habilitação da integração com WSL.
+- Orientar a reinicialização do WSL.
+- Encerrar o setup.
+
+### Resultado obtido
+
+**PASS**
+
+---
+
+## Cenário 11 — Docker Runtime e Docker Compose já instalados
+
+### Objetivo
+
+Validar que o `setup.sh` detecta uma instalação funcional do Docker Runtime e do Docker Compose sem realizar nenhuma ação adicional.
+
+### Resultado esperado
+
+- Detectar o Docker.
+- Capturar a versão instalada do Docker.
+- Detectar o Docker Compose.
+- Capturar a versão instalada do Docker Compose.
+- Não exibir mensagens de orientação do Docker Desktop.
+- Continuar normalmente a execução do setup.
+
+### Resultado obtido
+
+**PASS**
+
+---
+
 # Matriz de Validação
 
 | Cenário | Status |
@@ -213,6 +276,9 @@ Validar que o `setup.sh` instala automaticamente o Runtime Node.js quando ele n�
 | Cancelamento da instalação do Maven | ✅ PASS |
 | Runtime Node.js já instalado | ✅ PASS |
 | Instalação automática do Runtime Node.js | ✅ PASS |
+| Docker Desktop instalado e desligado | ✅ PASS |
+| Docker Desktop não instalado | ✅ PASS |
+| Docker Runtime já instalado | ✅ PASS |
 
 ---
 
@@ -223,20 +289,24 @@ Validar que o `setup.sh` instala automaticamente o Runtime Node.js quando ele n�
 | 15/07/2026 | Sprint 3 | Commit 4 | Marcel Philippe Abreu Andrade |
 | 16/07/2026 | Sprint 3 | Commit 5 | Marcel Philippe Abreu Andrade |
 | 22/07/2026 | Sprint 3 | Commit 6 | Marcel Philippe Abreu Andrade |
+| 26/07/2026 | Sprint 3 | Commit 7 | Marcel Philippe Abreu Andrade |
 
 ---
 
 # Conclusão
 
-Os testes executados confirmam que os fluxos de instalação automática do Java, Apache Maven e Runtime Node.js estão funcionando conforme o esperado para todos os cenários previstos.
+Os testes executados confirmam que os fluxos de instalação e validação do Java, Apache Maven, Runtime Node.js e Docker Runtime estão funcionando conforme o esperado para todos os cenários previstos.
 
 Foram validados com sucesso:
 
 - Ambiente previamente configurado.
 - Ambiente sem o componente instalado.
-- Instalação automática dos componentes.
+- Instalação automática dos componentes suportados.
 - Validação pós-instalação.
+- Diagnóstico do ambiente Docker.
+- Orientação para inicialização do Docker Desktop.
+- Orientação para instalação do Docker Desktop.
 - Exibição das versões instaladas.
-- Continuidade do processo de configuração da estação de desenvolvimento após a instalação dos componentes.
+- Continuidade do processo de configuração da estação de desenvolvimento quando todos os componentes estão disponíveis.
 
-Com essa validação concluída, a arquitetura implementada para Java, Apache Maven e Runtime Node.js passa a servir como padrão para os próximos componentes da Developer Platform, como Yarn, Docker, kubectl e Minikube.
+Com essa validação concluída, a arquitetura implementada para Java, Apache Maven, Runtime Node.js e Docker Runtime passa a servir como padrão para os próximos componentes da Developer Platform, como Yarn, kubectl e Minikube.

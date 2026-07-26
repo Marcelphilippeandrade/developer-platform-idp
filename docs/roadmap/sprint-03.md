@@ -6,6 +6,19 @@ Criar o instalador da estação de desenvolvimento.
 
 ---
 
+**Estratégia de desenvolvimento**
+
+Cada componente da estação de desenvolvimento é implementado incrementalmente seguindo o mesmo fluxo arquitetural:
+
+1. Detecção do componente.
+2. Captura da versão instalada.
+3. Solicitação de instalação.
+4. Instalação automática (quando suportada).
+5. Validação pós-instalação.
+6. Testes ponta a ponta.
+
+---
+
 ## Funcionalidades
 
 ### Commit 1
@@ -112,11 +125,43 @@ Instalação automática do Runtime Node.js.
 
 ### Commit 7
 
-Planejado.
+**Objetivo**
 
-Próximas implementações:
+Garantir que a estação de desenvolvimento possua um ambiente Docker funcional, validando a disponibilidade do Docker CLI, do Docker Desktop e do Docker Compose.
 
-- Yarn
+---
+
+**Implementações**
+
+- Detecção do Docker CLI.
+- Captura da versão instalada do Docker.
+- Detecção do Docker Desktop.
+- Verificação da instalação do Docker Desktop no Windows.
+- Orientação para inicialização do Docker Desktop quando instalado.
+- Orientação para instalação do Docker Desktop quando ausente.
+- Detecção do Docker Compose.
+- Captura da versão instalada do Docker Compose.
+- Encerramento controlado do setup quando o Docker não está disponível.
+- Testes ponta a ponta.
+
+---
+
+**Cenários Validados**
+
+- Docker Desktop instalado e desligado.
+- Docker Desktop não instalado.
+- Docker Desktop iniciado.
+- Docker CLI detectado e versão capturada.
+- Docker Compose detectado e versão capturada.
+
+---
+
+**Melhorias Futuras**
+
+- Validar automaticamente quando o Docker Desktop terminar de inicializar.
+- Detectar problemas na integração WSL.
+- Detectar quando a integração WSL estiver desabilitada.
+- Melhorar as mensagens de erro.
 
 ---
 
@@ -126,7 +171,7 @@ Planejado.
 
 Próximas implementações:
 
-- Docker
+- Yarn
 
 ---
 

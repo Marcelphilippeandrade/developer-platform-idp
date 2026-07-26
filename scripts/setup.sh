@@ -14,6 +14,8 @@ NVM_TARGET_VERSION="v0.40.3"
 
 NODE_TARGET_VERSION="lts/*"
 
+DOCKER_DESKTOP_PATH="/mnt/c/Program Files/Docker/Docker"
+
 # -----------------------------------------------------
 # Banner
 # -----------------------------------------------------
@@ -428,6 +430,91 @@ if command -v npm >/dev/null 2>&1; then
 else
 
     echo "✗ npm"
+
+fi
+
+# -----------------------------------------------------
+# Docker
+# -----------------------------------------------------
+
+echo ""
+echo "Docker:"
+
+# -----------------------------------------------------
+# Docker CLI
+# -----------------------------------------------------
+
+if docker --version >/dev/null 2>&1; then
+
+    INSTALLED_DOCKER_VERSION="$(
+        docker --version |
+        sed -E 's/Docker version ([^,]+),.*/\1/'
+    )"
+
+    echo "✓ Docker ($INSTALLED_DOCKER_VERSION)"
+
+else
+
+    echo "✗ Docker"
+    echo ""
+
+    # -------------------------------------------------
+    # Docker Desktop Detection
+    # -------------------------------------------------
+
+    if [ -f "$DOCKER_DESKTOP_PATH/Docker Desktop.exe" ]; then
+
+        echo "✓ Docker Desktop installed"
+        echo ""
+
+        # ---------------------------------------------
+        # Docker Desktop Guidance
+        # ---------------------------------------------
+
+        echo "Docker Desktop is currently not running."
+        echo ""
+        echo "Please start Docker Desktop."
+        echo ""
+        echo "Run ./scripts/setup.sh again after Docker Desktop is running."
+
+    else
+
+        echo "✗ Docker Desktop not installed"
+        echo ""
+
+        # ---------------------------------------------
+        # Docker Desktop Installation Guidance
+        # ---------------------------------------------
+
+        echo "Please install Docker Desktop for Windows."
+        echo ""
+        echo "After installation:"
+        echo "  1. Enable WSL integration."
+        echo "  2. Restart WSL."
+        echo "  3. Execute setup.sh again."
+
+    fi
+
+    return 1 2>/dev/null || exit 1
+
+fi
+
+# -----------------------------------------------------
+# Docker Compose
+# -----------------------------------------------------
+
+if docker compose version >/dev/null 2>&1; then
+
+    INSTALLED_DOCKER_COMPOSE_VERSION="$(
+        docker compose version |
+        sed -E 's/Docker Compose version v?([^ ]+).*/\1/'
+    )"
+
+    echo "✓ Docker Compose ($INSTALLED_DOCKER_COMPOSE_VERSION)"
+
+else
+
+    echo "✗ Docker Compose"
 
 fi
 
