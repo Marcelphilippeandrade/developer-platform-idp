@@ -264,6 +264,80 @@ Validar que o `setup.sh` detecta uma instalação funcional do Docker Runtime e 
 
 ---
 
+## Cenário 12 — Yarn já instalado
+
+### Objetivo
+
+Validar que o `setup.sh` detecta uma instalação existente do Yarn sem tentar reinstalá-lo.
+
+### Resultado esperado
+
+- Detectar o Yarn instalado.
+- Exibir a versão instalada.
+- Não solicitar instalação.
+- Continuar a execução do setup.
+
+### Resultado obtido
+
+**PASS**
+
+---
+
+## Cenário 13 — Instalação automática do Yarn
+
+### Objetivo
+
+Validar o fluxo de instalação automática do Yarn quando ele não está disponível.
+
+### Resultado esperado
+
+- Detectar ausência do Yarn.
+- Solicitar confirmação ao usuário.
+- Iniciar o processo de instalação.
+- Validar a instalação.
+- Exibir a versão instalada.
+- Continuar a execução do setup.
+
+### Resultado obtido
+
+**PASS**
+
+### Observação
+
+Durante a homologação foi utilizada uma simulação controlada da instalação para preservar a integridade do ambiente de desenvolvimento.
+
+O comando real:
+
+```bash
+npm install --global yarn
+```
+
+foi temporariamente substituído por uma simulação do processo de instalação.
+
+A homologação da instalação real será realizada futuramente em um ambiente limpo (VM, WSL recém-instalado ou container).
+
+---
+
+## Cenário 14 — Usuário cancela a instalação do Yarn
+
+### Objetivo
+
+Validar que o processo de instalação é interrompido quando o usuário opta por não instalar o Yarn.
+
+### Resultado esperado
+
+- Detectar ausência do Yarn.
+- Solicitar confirmação ao usuário.
+- Usuário responde **Não**.
+- Encerrar o setup.
+- Exibir mensagem informando que a instalação foi cancelada.
+
+### Resultado obtido
+
+**PASS**
+
+---
+
 # Matriz de Validação
 
 | Cenário | Status |
@@ -279,6 +353,9 @@ Validar que o `setup.sh` detecta uma instalação funcional do Docker Runtime e 
 | Docker Desktop instalado e desligado | ✅ PASS |
 | Docker Desktop não instalado | ✅ PASS |
 | Docker Runtime já instalado | ✅ PASS |
+| Yarn já instalado | ✅ PASS |
+| Instalação automática do Yarn | ✅ PASS |
+| Cancelamento da instalação do Yarn | ✅ PASS |
 
 ---
 
@@ -290,12 +367,15 @@ Validar que o `setup.sh` detecta uma instalação funcional do Docker Runtime e 
 | 16/07/2026 | Sprint 3 | Commit 5 | Marcel Philippe Abreu Andrade |
 | 22/07/2026 | Sprint 3 | Commit 6 | Marcel Philippe Abreu Andrade |
 | 26/07/2026 | Sprint 3 | Commit 7 | Marcel Philippe Abreu Andrade |
+| 29/07/2026 | Sprint 3 | Commit 8 | Marcel Philippe Abreu Andrade |
 
 ---
 
 # Conclusão
 
-Os testes executados confirmam que os fluxos de instalação e validação do Java, Apache Maven, Runtime Node.js e Docker Runtime estão funcionando conforme o esperado para todos os cenários previstos.
+# Conclusão
+
+Os testes executados confirmam que os fluxos de instalação e validação do Java, Apache Maven, Runtime Node.js, Docker Runtime e Yarn estão funcionando conforme o esperado para todos os cenários previstos.
 
 Foram validados com sucesso:
 
@@ -309,4 +389,6 @@ Foram validados com sucesso:
 - Exibição das versões instaladas.
 - Continuidade do processo de configuração da estação de desenvolvimento quando todos os componentes estão disponíveis.
 
-Com essa validação concluída, a arquitetura implementada para Java, Apache Maven, Runtime Node.js e Docker Runtime passa a servir como padrão para os próximos componentes da Developer Platform, como Yarn, kubectl e Minikube.
+Durante a homologação do Yarn foi utilizada uma simulação controlada da instalação para preservar a integridade do ambiente de desenvolvimento. A validação da instalação real será executada futuramente em um ambiente limpo.
+
+Com essa validação concluída, a arquitetura implementada para Java, Apache Maven, Runtime Node.js, Docker Runtime e Yarn passa a servir como padrão para os próximos componentes da Developer Platform, como kubectl e Minikube.

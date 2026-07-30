@@ -6,16 +6,18 @@ Criar o instalador da estação de desenvolvimento.
 
 ---
 
-**Estratégia de desenvolvimento**
+## Estratégia de desenvolvimento
 
-Cada componente da estação de desenvolvimento é implementado incrementalmente seguindo o mesmo fluxo arquitetural:
+Todos os componentes da Developer Platform seguem o mesmo fluxo de implementação:
 
-1. Detecção do componente.
-2. Captura da versão instalada.
-3. Solicitação de instalação.
-4. Instalação automática (quando suportada).
+1. Definição da arquitetura.
+2. Detecção do componente.
+3. Captura da versão instalada.
+4. Instalação (quando suportada).
 5. Validação pós-instalação.
 6. Testes ponta a ponta.
+7. Documentação.
+8. Commit e homologação.
 
 ---
 
@@ -167,11 +169,39 @@ Garantir que a estação de desenvolvimento possua um ambiente Docker funcional,
 
 ### Commit 8
 
-Planejado.
+**Objetivo**
 
-Próximas implementações:
+Garantir que a estação de desenvolvimento possua uma instalação funcional do Yarn, realizando sua detecção, instalação automática (quando necessário) e validação pós-instalação.
 
-- Yarn
+---
+
+**Implementações**
+
+- Detecção do Yarn.
+- Captura da versão instalada.
+- Solicitação de instalação ao usuário.
+- Instalação automática do Yarn via npm.
+- Validação pós-instalação.
+- Exibição da versão instalada.
+- Encerramento controlado quando a instalação é recusada.
+- Testes ponta a ponta.
+
+---
+
+**Cenários Validados**
+
+- Yarn previamente instalado.
+- Instalação automática do Yarn.
+- Cancelamento da instalação pelo usuário.
+
+---
+
+**Melhorias Futuras**
+
+- Permitir seleção da versão do Yarn.
+- Validar versões mínimas suportadas.
+- Detectar automaticamente instalações realizadas via Corepack.
+- Adicionar suporte ao modo de simulação (`--dry-run`) para homologação sem alterar o ambiente.
 
 ---
 
@@ -214,3 +244,6 @@ Próximas implementações:
 ## Status
 
 🚧 Em andamento
+
+Commit 8 concluído.
+Próximo objetivo: Commit 9 — kubectl.

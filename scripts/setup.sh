@@ -519,6 +519,56 @@ else
 fi
 
 # -----------------------------------------------------
+# Yarn
+# -----------------------------------------------------
+
+echo ""
+echo "Yarn:"
+
+if yarn --version >/dev/null 2>&1; then
+
+    echo "✓ Yarn ($(yarn --version))"
+
+else
+
+    echo "✗ Yarn"
+    echo ""
+
+    read -rp "Install Yarn now? [y/N]: " INSTALL_YARN
+
+    if [[ "$INSTALL_YARN" =~ ^[Yy]$ ]]; then
+
+        echo ""
+        echo "Installing Yarn..."
+        echo ""
+
+        npm install --global yarn
+
+        echo ""
+
+        if yarn --version >/dev/null 2>&1; then
+
+            echo "✓ Yarn ($(yarn --version))"
+
+        else
+
+        echo "✗ Failed to install Yarn."
+
+        return 1 2>/dev/null || exit 1
+
+    fi
+
+    else
+
+        echo ""
+        echo "Yarn installation skipped."
+
+        return 1 2>/dev/null || exit 1
+
+    fi
+fi
+
+# -----------------------------------------------------
 # Components Installation
 # -----------------------------------------------------
 echo ""
